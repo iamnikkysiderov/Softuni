@@ -1,0 +1,15 @@
+body {
+    background-color: cadetblue;
+}
+
+p {
+    font-size: 100px;
+    margin: 10px;
+}
+
+span {
+    border: 0px solid gray;
+    background-color: gray;
+    color: black;
+    border-radius: 20px;
+}

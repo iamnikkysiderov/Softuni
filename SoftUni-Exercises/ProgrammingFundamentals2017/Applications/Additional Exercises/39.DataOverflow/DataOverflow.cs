@@ -1,0 +1,1 @@
+﻿// opitah se da ya resha ama se izwernih

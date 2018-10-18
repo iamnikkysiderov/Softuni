@@ -1,0 +1,1 @@
+﻿using System; class SinoTheWalker { static void Main() { Console.WriteLine("Time Arrival: {0:HH:mm:ss}", DateTime.ParseExact(Console.ReadLine(), "HH:mm:ss", null).AddSeconds(double.Parse(Console.ReadLine()) * double.Parse(Console.ReadLine()) % (60 * 60 * 24))); } }
