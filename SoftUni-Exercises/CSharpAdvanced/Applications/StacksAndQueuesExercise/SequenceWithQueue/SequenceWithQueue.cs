@@ -12,33 +12,44 @@ namespace SequenceWithQueue
         {
             var n = int.Parse(Console.ReadLine());
 
-            var previousNum = n;
-
-            int counter = 1;
+            var queue = new Queue<int>();
+            var secondQueue = new Queue<int>();
+            var count = 1;
 
             Console.Write(n + " ");
 
-            while (counter <= 50)
+            secondQueue.Enqueue(n);
+
+            while (count <= 49)
             {
-                if (counter <= 50)
-                {
-                    Console.Write(previousNum + 1 + " ");
-                    counter++;
-                }
 
-                if (counter <= 50)
-                {
-                    Console.Write(2 * previousNum + 1 + " ");
-                    counter++;
-                }
+                queue.Enqueue(secondQueue.Peek() + 1);
+                secondQueue.Enqueue(secondQueue.Peek() + 1);
 
-                if (counter <= 50)
-                {
-                    Console.Write(previousNum + 2 + " ");
-                    counter++;
-                }
+                queue.Enqueue(2 * secondQueue.Peek() + 1);
+                secondQueue.Enqueue(2 * secondQueue.Peek() + 1);
 
-                previousNum += 1;
+                queue.Enqueue(secondQueue.Peek() + 2);
+                secondQueue.Enqueue(secondQueue.Peek() + 2);
+
+                secondQueue.Dequeue();
+
+                if (count >= 48)
+                {
+                    Console.Write(queue.Dequeue() + " ");
+                    count++;
+                }
+                else
+                {
+                    Console.Write(queue.Dequeue() + " ");
+                    count++;
+
+                    Console.Write(queue.Dequeue() + " ");
+                    count++;
+
+                    Console.Write(queue.Dequeue() + " ");
+                    count++;
+                }
             }
 
             Console.WriteLine();
