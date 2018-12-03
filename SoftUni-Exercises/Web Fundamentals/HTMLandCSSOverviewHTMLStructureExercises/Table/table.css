@@ -1,0 +1,44 @@
+@font-face {
+    font-family: Lato;
+    src: url('https://fonts.googleapis.com/css?family=Lato');
+}
+    
+body {
+    font-family: Lato, sans-serif;
+}
+
+table {
+    color: #333333;
+    border-spacing: 0;
+    align-content: center;
+    border: 1px solid blue;
+}
+
+thead {
+    color: #ffffff;
+    background-color: #90b4d6;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.first {
+    padding: 5px 30px 5px 10px;
+    font-size: 18px;
+    margin: 0;
+    text-align: left;
+    background-color: #84b3ad;
+}
+
+.second {
+    padding: 5px 30px 5px 10px;
+    font-size: 18px;
+    margin: 0;
+    text-align: left;
+    background-color: #689ad8;
+}
+
+td {
+    width: 150px;
+    padding: 15px;
+}

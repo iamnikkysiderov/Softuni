@@ -1,0 +1,30 @@
+nav {
+    font-size: 20px;
+    text-align: center;
+}
+
+ul {
+    padding: 0;
+    height: 40px;
+    line-height: 30px;
+    background-color: #84b3ad;
+}
+
+li {
+    width: 100px;
+    margin: 0 5px;
+    padding: 5px 0;
+    cursor: pointer;
+    display: inline-block;
+}
+
+li a {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    background-color: #135e3e;
+    padding: 9px 11px;
+}

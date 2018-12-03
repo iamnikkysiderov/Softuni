@@ -1,0 +1,11 @@
+div {
+    background-color: #dddddd;
+    width: 550px;
+    border: 2px solid black;
+    color: #95191a;
+    font-size: 30px;
+}
+
+li {
+    margin-left: 30px;
+}
