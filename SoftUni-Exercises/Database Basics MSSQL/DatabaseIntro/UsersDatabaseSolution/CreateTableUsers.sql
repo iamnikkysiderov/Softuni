@@ -1,0 +1,8 @@
+CREATE TABLE Users (
+	Id INT PRIMARY KEY IDENTITY,
+	Username VARCHAR(30) NOT NULL,
+	Password VARCHAR(26) NOT NULL,
+	ProfilePicture VARBINARY(MAX),
+	LastLoginTime DATETIME2,
+	IsDeleted BIT
+	)
