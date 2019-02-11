@@ -11,14 +11,14 @@ namespace SimpleWebServer
         static void Main(string[] args)
         {
             IPAddress address = IPAddress.Parse("127.0.0.1");
-            int port = 1300;
+            int port = 8080;
             TcpListener listener = new TcpListener(address, port);
             listener.Start();
 
             Console.WriteLine("Server started");
             Console.WriteLine("Listening to TCP clients at 127.0.0.1:{0}", port);
 
-            var task = Task.Run(() => ConnectWithTcpClient(listener));
+            var task = Task.Run(async () => await ConnectWithTcpClient(listener));
             task.Wait();
         }
 
@@ -33,13 +33,13 @@ namespace SimpleWebServer
                 Console.WriteLine("Client connected");
 
                 byte[] buffer = new byte[1024];
-                client.GetStream().Read(buffer, 0, buffer.Length);
+                await client.GetStream().ReadAsync(buffer, 0, buffer.Length);
 
                 var message = Encoding.ASCII.GetString(buffer);
-                Console.WriteLine(message);
+                Console.WriteLine(message.Trim('\0'));
 
-                byte[] data = Encoding.ASCII.GetBytes("Hello from server");
-                client.GetStream().Write(data, 0, data.Length);
+                byte[] data = Encoding.UTF8.GetBytes("HTTP/1.1 200 OK\nContent-Type: text/plain\n\nHello from server");
+                await client.GetStream().WriteAsync(data, 0, data.Length);
 
                 Console.WriteLine("Closing connection");
                 client.GetStream().Dispose();
