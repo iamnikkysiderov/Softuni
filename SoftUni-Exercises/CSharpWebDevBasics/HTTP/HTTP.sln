@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTPServer", "HTTPServer\HTTPServer.csproj", "{C5D415EC-1049-42A3-B223-6B81F6243991}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTTPServer", "HTTPServer\HTTPServer.csproj", "{C5D415EC-1049-42A3-B223-6B81F6243991}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlDecoderApp", "UrlDecoderApp\UrlDecoderApp.csproj", "{6A5C6269-FB14-4061-AF73-2ADF6561F9B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidateURL", "ValidateURL\ValidateURL.csproj", "{BD123FA5-A0BE-4885-AAC2-8135F8407F2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{C5D415EC-1049-42A3-B223-6B81F6243991}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5D415EC-1049-42A3-B223-6B81F6243991}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5D415EC-1049-42A3-B223-6B81F6243991}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A5C6269-FB14-4061-AF73-2ADF6561F9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A5C6269-FB14-4061-AF73-2ADF6561F9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A5C6269-FB14-4061-AF73-2ADF6561F9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A5C6269-FB14-4061-AF73-2ADF6561F9B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD123FA5-A0BE-4885-AAC2-8135F8407F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD123FA5-A0BE-4885-AAC2-8135F8407F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD123FA5-A0BE-4885-AAC2-8135F8407F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD123FA5-A0BE-4885-AAC2-8135F8407F2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
