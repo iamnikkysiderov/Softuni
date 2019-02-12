@@ -6,4 +6,4 @@ function solve(a, b) {
     console.log(perimeter);
 }
 
-solve(4, 2);
+solve(10, 7);
