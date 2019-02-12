@@ -5,6 +5,7 @@ using HandmadeHTTPServer.Server.Http.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace HandmadeHTTPServer.Server.Http
@@ -66,6 +67,7 @@ namespace HandmadeHTTPServer.Server.Http
             this.Path = this.ParsePath(this.Url);
             this.ParseHeaders(requestLines);
             this.ParseParameters();
+            this.ParseFormData(requestLines.Last());
         }
 
         private HttpRequestMethod ParseMethod(string method)
@@ -122,13 +124,42 @@ namespace HandmadeHTTPServer.Server.Http
 
             var query = this.Url.Split(new[] { '?' }, StringSplitOptions.RemoveEmptyEntries).Last();
 
+            this.ParseQuery(query, this.UrlParameters);
+        }
+
+        private void ParseFormData(string formDataLine)
+        {
+            if (this.RequestMethod == HttpRequestMethod.Get)
+            {
+                return;
+            }
+
+            this.ParseQuery(formDataLine, this.QueryParameters);
+        }
+
+        private void ParseQuery(string query, Dictionary<string, string> dict)
+        {
             if (!query.Contains('='))
             {
                 return;
             }
 
-            var queryPairs = query.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries)
+            var queryPairs = query.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
 
+            foreach (var queryPair in queryPairs)
+            {
+                var queryKvp = queryPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (queryKvp.Length != 2)
+                {
+                    return;
+                }
+
+                var queryKey = WebUtility.UrlDecode(queryKvp[0]);
+                var queryValue = WebUtility.UrlDecode(queryKvp[1]);
+
+                dict.Add(queryKey, queryValue);
+            }
         }
     }
 }
