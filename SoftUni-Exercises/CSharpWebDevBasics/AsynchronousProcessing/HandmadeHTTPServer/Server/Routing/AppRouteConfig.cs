@@ -1,5 +1,6 @@
 ﻿using HandmadeHTTPServer.Server.Enums;
 using HandmadeHTTPServer.Server.Handlers;
+using HandmadeHTTPServer.Server.Http.Contracts;
 using HandmadeHTTPServer.Server.Routing.Contracts;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,16 @@ namespace HandmadeHTTPServer.Server.Routing
         }
 
         public IReadOnlyDictionary<HttpRequestMethod, IDictionary<string, RequestHandler>> Routes => this.routes;
+
+        public void Get(string route, Func<IHttpRequest, IHttpResponse> handler)
+        {
+            this.AddRoute(route, new GetHandler(handler));
+        }
+
+        public void Post(string route, Func<IHttpRequest, IHttpResponse> handler)
+        {
+            this.AddRoute(route, new PostHandler(handler));
+        }
 
         public void AddRoute(string route, RequestHandler handler)
         {

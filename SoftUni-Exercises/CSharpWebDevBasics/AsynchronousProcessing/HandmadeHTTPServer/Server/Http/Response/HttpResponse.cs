@@ -1,9 +1,10 @@
-﻿using System.Net;
+﻿using HandmadeHTTPServer.Server.Http.Contracts;
+using System.Net;
 using System.Text;
 
 namespace HandmadeHTTPServer.Server.Http.Response
 {
-    public abstract class HttpResponse
+    public abstract class HttpResponse : IHttpResponse
     {
         private string statusCodeMessage => this.StatusCode.ToString();
 
