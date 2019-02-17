@@ -14,6 +14,8 @@ namespace HandmadeHTTPServer.Application
         {
             appRouteConfig.Get("/", request => new HomeController().Index());
 
+            appRouteConfig.Get("/testsession", request => new HomeController().SessionTest(request));
+
             appRouteConfig.Get("/users/{(?<name>[a-z]+)}", request => new HomeController().Index());
         }
     }

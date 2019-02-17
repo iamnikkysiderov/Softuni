@@ -23,6 +23,8 @@ namespace HandmadeHTTPServer.Server.Http.Contracts
 
         Dictionary<string, string> UrlParameters { get; }
 
+        IHttpSession Session { get; set; }
+
         void AddUrlParameter(string key, string value);
     }
 }

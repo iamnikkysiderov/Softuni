@@ -18,5 +18,20 @@ namespace HandmadeHTTPServer.Application.Controllers
 
             return response;
         }
+
+        // Get /testsession
+        public IHttpResponse SessionTest(IHttpRequest req)
+        {
+            var session = req.Session;
+
+            const string sessionDateKey = "saved_date";
+
+            if (session.Get(sessionDateKey) == null)
+            {
+                session.Add(sessionDateKey, DateTime.UtcNow);
+            }
+
+            return new ViewResponse(System.Net.HttpStatusCode.OK, new SessionTestView(session.Get<DateTime>(sessionDateKey)));
+        }
     }
 }

@@ -45,6 +45,8 @@ namespace HandmadeHTTPServer.Server.Http
 
         public Dictionary<string, string> UrlParameters { get; private set; }
 
+        public IHttpSession Session { get; set; }
+
         public void AddUrlParameter(string key, string value)
         {
             CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
@@ -76,6 +78,7 @@ namespace HandmadeHTTPServer.Server.Http
             this.ParseCookies();
             this.ParseParameters();
             this.ParseFormData(requestLines.Last());
+            this.SetSession();
         }
 
         private HttpRequestMethod ParseMethod(string method)
@@ -131,21 +134,29 @@ namespace HandmadeHTTPServer.Server.Http
 
                 foreach (var cookie in allCookies)
                 {
-                    var cookieParts = cookie.Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                    if (!cookie.Value.Contains('='))
+                    {
+                        return;
+                    }
 
-                    if (cookieParts == null || !cookieParts.Contains("="))
+                    var cookieParts = cookie.Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+                    if (!cookieParts.Any())
                     {
                         continue;
                     }
 
-                    var cookieKvp = cookieParts.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    if (cookieKvp.Length == 2)
+                    foreach (var cookiePart in cookieParts)
                     {
-                        var key = cookieKvp[0];
-                        var value = cookieKvp[1];
+                        var cookieKvp = cookiePart.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
 
-                        this.Cookies.Add(new HttpCookie(key, value, false));
+                        if (cookieKvp.Length == 2)
+                        {
+                            var key = cookieKvp[0].Trim();
+                            var value = cookieKvp[1].Trim();
+
+                            this.Cookies.Add(new HttpCookie(key, value, false));
+                        }
                     }
                 }
             }
@@ -197,5 +208,20 @@ namespace HandmadeHTTPServer.Server.Http
                 dict.Add(queryKey, queryValue);
             }
         }
+
+        private void SetSession()
+        {
+            const string sessionCookieKey = "MY_SID";
+
+            if (this.Cookies.ContainsKey(sessionCookieKey))
+            {
+                var cookie = this.Cookies.Get(sessionCookieKey);
+                var sessionId = cookie.Value;
+
+                this.Session = SessionStore.Get(sessionId);
+            }
+        }
+
+        public override string ToString() => this.requestString;
     }
 }

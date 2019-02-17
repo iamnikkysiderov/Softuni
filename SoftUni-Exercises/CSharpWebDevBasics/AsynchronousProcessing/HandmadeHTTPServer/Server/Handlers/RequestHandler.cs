@@ -21,7 +21,23 @@ namespace HandmadeHTTPServer.Server.Handlers
 
         public IHttpResponse Handle(IHttpContext context)
         {
+            Object sendSessionId = null;
+
+            if (!context.Request.Cookies.ContainsKey(SessionStore.SessionCookieKey))
+            {
+                var sessionId = Guid.NewGuid().ToString();
+
+                context.Request.Session = SessionStore.Get(sessionId);
+
+                sendSessionId = sessionId;
+            }
+
             var response = this.handlingFunc(context.Request);
+
+            if (sendSessionId != null)
+            {
+                response.Headers.Add("Set-Cookie", $"{SessionStore.SessionCookieKey}={sendSessionId}; HttpOnly; path=/");
+            }
 
             response.Headers.Add(new HttpHeader("Content-Type", "text/html"));
 
