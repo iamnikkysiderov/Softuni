@@ -12,21 +12,28 @@ namespace HandmadeHTTPServer.Server.Http
 {
     class HttpRequest : IHttpRequest
     {
+        private readonly string requestString;
+
         public HttpRequest(string requestString)
         {
             CoreValidator.ThrowIfNullOrEmpty(requestString, nameof(requestString));
+
+            this.requestString = requestString;
 
             this.FormData = new Dictionary<string, string>();
             this.HeaderCollection = new HttpHeaderCollection();
             this.QueryParameters = new Dictionary<string, string>();
             this.UrlParameters = new Dictionary<string, string>();
+            this.Cookies = new HttpCookieCollection();
 
             this.ParseRequest(requestString);
         }
 
-        public Dictionary<string, string> FormData { get; private set; }
+        public IDictionary<string, string> FormData { get; private set; }
 
-        public HttpHeaderCollection HeaderCollection { get; private set; }
+        public IHttpHeaderCollection HeaderCollection { get; private set; }
+
+        public IHttpCookieCollection Cookies { get; private set; }
 
         public string Path { get; private set; }
 
@@ -66,6 +73,7 @@ namespace HandmadeHTTPServer.Server.Http
             this.Url = requestLine[1];
             this.Path = this.ParsePath(this.Url);
             this.ParseHeaders(requestLines);
+            this.ParseCookies();
             this.ParseParameters();
             this.ParseFormData(requestLines.Last());
         }
@@ -112,6 +120,34 @@ namespace HandmadeHTTPServer.Server.Http
             if (!this.HeaderCollection.ContainsKey("Host"))
             {
                 BadRequestException.ThrowFromInvalidRequest();
+            }
+        }
+
+        private void ParseCookies()
+        {
+            if (this.HeaderCollection.ContainsKey("Cookie"))
+            {
+                var allCookies = this.HeaderCollection.GetHeader("Cookie");
+
+                foreach (var cookie in allCookies)
+                {
+                    var cookieParts = cookie.Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+
+                    if (cookieParts == null || !cookieParts.Contains("="))
+                    {
+                        continue;
+                    }
+
+                    var cookieKvp = cookieParts.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (cookieKvp.Length == 2)
+                    {
+                        var key = cookieKvp[0];
+                        var value = cookieKvp[1];
+
+                        this.Cookies.Add(new HttpCookie(key, value, false));
+                    }
+                }
             }
         }
 

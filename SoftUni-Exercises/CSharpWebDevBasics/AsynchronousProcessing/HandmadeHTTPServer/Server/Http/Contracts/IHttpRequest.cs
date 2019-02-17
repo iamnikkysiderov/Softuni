@@ -7,9 +7,11 @@ namespace HandmadeHTTPServer.Server.Http.Contracts
 {
     public interface IHttpRequest
     {
-        Dictionary<string, string> FormData { get; }
+        IDictionary<string, string> FormData { get; }
 
-        HttpHeaderCollection HeaderCollection { get; }
+        IHttpHeaderCollection HeaderCollection { get; }
+
+        IHttpCookieCollection Cookies { get; }
 
         string Path { get; }
 

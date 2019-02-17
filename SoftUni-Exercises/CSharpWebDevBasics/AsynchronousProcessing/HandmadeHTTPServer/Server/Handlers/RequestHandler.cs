@@ -23,7 +23,12 @@ namespace HandmadeHTTPServer.Server.Handlers
         {
             var response = this.handlingFunc(context.Request);
 
-            response.Headers.Add(new HttpHeader("Content-Type", "text/plain"));
+            response.Headers.Add(new HttpHeader("Content-Type", "text/html"));
+
+            foreach (var cookie in response.Cookies)
+            {
+                response.Headers.Add("Set-Cookie", cookie.ToString());
+            }
 
             return response;
         }

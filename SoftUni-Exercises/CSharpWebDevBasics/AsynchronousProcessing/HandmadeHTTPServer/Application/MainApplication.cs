@@ -13,6 +13,8 @@ namespace HandmadeHTTPServer.Application
         public void Configure(IAppRouteConfig appRouteConfig)
         {
             appRouteConfig.Get("/", request => new HomeController().Index());
+
+            appRouteConfig.Get("/users/{(?<name>[a-z]+)}", request => new HomeController().Index());
         }
     }
 }
