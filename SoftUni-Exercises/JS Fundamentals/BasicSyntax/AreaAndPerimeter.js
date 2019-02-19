@@ -5,5 +5,3 @@ function solve(a, b) {
     console.log(area);
     console.log(perimeter);
 }
-
-solve(10, 7);
