@@ -2,7 +2,7 @@
 
 All of my homework and exercises for SoftUni (Software University).
 
-# What I Learned
+# What I have learned
 
 * Understanding OOP
 * Knowledge in C#, HTML and CSS
